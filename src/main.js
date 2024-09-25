@@ -8,10 +8,10 @@ import App from './App.vue'
 import router from './router'
 import VeeValidatePlugin from './includes/validation'
 import './includes/firebase'
-import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth } from './includes/firebase'
 
 let app
-const auth = getAuth()
 onAuthStateChanged(auth, () => {
   if (!app) {
     app = createApp(App)

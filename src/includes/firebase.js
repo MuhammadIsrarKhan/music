@@ -1,22 +1,24 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
-import { getFirestore } from 'firebase/firestore'
+import { collection, getFirestore } from 'firebase/firestore'
 import { getStorage } from 'firebase/storage'
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyBl0KhX2J1Em8Y3TMKIvVFiNMvFNk566FY',
-  authDomain: 'music-33c07.firebaseapp.com',
-  projectId: 'music-33c07',
-  storageBucket: 'music-33c07.appspot.com',
-  messagingSenderId: '872543390857',
-  appId: '1:872543390857:web:669d1fc35f5e989b4c8a58'
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 }
 
 const app = initializeApp(firebaseConfig)
 
 const db = getFirestore(app)
-const auth = getAuth();
+const auth = getAuth()
 const storage = getStorage()
+const songsCollection = collection(db, 'songs')
+const commentsCollection = collection(db, 'comments')
 
-export { db,auth,storage }
+export { db, auth, storage, songsCollection,commentsCollection }

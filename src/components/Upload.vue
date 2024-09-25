@@ -41,8 +41,8 @@
 </template>
 
 <script>
-import { auth, db, storage } from '@/includes/firebase'
-import { addDoc, collection, doc, getDoc, setDoc } from 'firebase/firestore'
+import { auth, songsCollection, storage } from '@/includes/firebase'
+import { addDoc, getDoc } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 export default {
   name: 'upload',
@@ -98,8 +98,7 @@ export default {
             }
 
             song.url = await getDownloadURL(uploadSong.snapshot.ref)
-            const songsCollectionRef = collection(db, 'songs')
-            const songRef = await addDoc(songsCollectionRef, song)
+            const songRef = await addDoc(songsCollection, song)
             const songSnapshot = await getDoc(songRef)
 
             this.addSong(songSnapshot)
