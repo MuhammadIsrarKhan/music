@@ -10,6 +10,7 @@ import VeeValidatePlugin from './includes/validation'
 import './includes/firebase'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from './includes/firebase'
+import i18n from './includes/i18n'
 
 let app
 onAuthStateChanged(auth, () => {
@@ -19,6 +20,7 @@ onAuthStateChanged(auth, () => {
     app.use(createPinia())
     app.use(router)
     app.use(VeeValidatePlugin)
+    app.use(i18n)
 
     app.mount('#app')
   }
