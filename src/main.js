@@ -11,6 +11,9 @@ import './includes/firebase'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from './includes/firebase'
 import i18n from './includes/i18n'
+import { registerSW } from 'virtual:pwa-register'
+
+registerSW({ immediate: true })
 
 let app
 onAuthStateChanged(auth, () => {
