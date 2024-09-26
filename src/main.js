@@ -1,6 +1,3 @@
-import './assets/base.css'
-import './assets/main.css'
-
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
@@ -12,6 +9,15 @@ import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from './includes/firebase'
 import i18n from './includes/i18n'
 import { registerSW } from 'virtual:pwa-register'
+import GlobalComponents from "./includes/_globals";
+import progressBar from "./includes/progress-bar";
+
+import './assets/base.css'
+import './assets/main.css'
+import "nprogress/nprogress.css";
+
+progressBar(router);
+
 
 registerSW({ immediate: true })
 
@@ -23,6 +29,7 @@ onAuthStateChanged(auth, () => {
     app.use(createPinia())
     app.use(router)
     app.use(VeeValidatePlugin)
+    app.use(GlobalComponents);
     app.use(i18n)
 
     app.mount('#app')

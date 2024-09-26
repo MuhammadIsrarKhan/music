@@ -18,7 +18,7 @@
         <!-- Song Info -->
         <div class="text-3xl font-bold">{{ song.modified_name }}</div>
         <div>{{ song.genre }}</div>
-        <div class="song-price">{{ $n(1, 'currency','ur') }}</div>
+        <div class="song-price">{{ $n(1, 'currency', 'ur') }}</div>
       </div>
     </div>
   </section>
@@ -121,19 +121,22 @@ export default {
       })
     }
   },
-  async created() {
-    const docSnapshot = await getDoc(doc(db, 'songs', this.$route.params.id))
-    if (!docSnapshot.exists) {
-      this.router.push({ name: 'home' })
-      return
-    }
+  async beforeRouteEnter(to, from, next) {
+    const docSnapshot = await getDoc(doc(db, 'songs', to.params.id))
 
-    const { sort } = this.$route.query
+    next((vm) => {
+      if (!docSnapshot.exists) {
+        vm.router.push({ name: 'home' })
+        return
+      }
 
-    this.sort = this.sort === '1' || this.sort === '2' ? sort : '1'
+      const { sort } = vm.$route.query
 
-    this.song = docSnapshot.data()
-    this.getComments()
+      vm.sort = vm.sort === '1' || vm.sort === '2' ? sort : '1'
+
+      vm.song = docSnapshot.data()
+      vm.getComments()
+    })
   },
   methods: {
     ...mapActions(usePlayerStore, ['newSong']),
